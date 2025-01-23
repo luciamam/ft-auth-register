@@ -2,6 +2,8 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
+import {getFirestore} from  "firebase/firestore"
+
 const firebaseConfig = {
   apiKey: "AIzaSyDnQO_qEvyX0TQ5LgEvww99hJPK06KDwTI",
   authDomain: "fir-auth-78662.firebaseapp.com",
@@ -15,5 +17,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 //esto es lo que ya hacemos nosotros 
-const auth= getAuth(app)  //aqui es donde se hace la conexion , conexion con firebase 
-export { auth }
+const auth= getAuth(app)  //aqui es donde se hace la conexion , conexion con firebase , en mi aplicacion voy a usar autentificacion 
+const db=getFirestore(app) // en mi aplicacion voy a usar Firebase 
+export { auth,db }

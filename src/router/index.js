@@ -37,13 +37,29 @@ const router = createRouter({
   routes
 })
 
+
+
+//esto es lo que controla si estoy registrado o no 
+
 router.beforeEach((to,from,next)=>{
-  const currrentUser=auth.currentUser
+  //const currrentUser=auth.currentUser
+  const requiresAut=to.matched.some(record=>record.meta.requiresAuth) 
   //tiene que ver que la que el usuario primero este registrado , mira la ruta que que este con eso , si no lo estas te lleva a la ruta register
-  if(to.matched.some((record)=>record.meta.requiresAuth) && !currrentUser){
-    next({name:"register"})
-  }else{
-    next();// si esta utentificado 
+  if(requiresAut) {
+      const unsubscrite=auth.onAuthStateChanged((user)=>{
+        if (user) {
+          next()//el usuario existe 
+          
+        }else{
+          next({name: 'login'}) //lleva al login
+        }
+
+      })
+
+      unsubscrite()
+  }
+  else{
+    next();// si  la ruta no requiere autentificacon 
   }
 })
 
